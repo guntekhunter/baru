@@ -13,6 +13,10 @@ export const getCheck = async (id) => {
     const res = await axios.get(`https://jsonplaceholder.typicode.com/users/${id}/todos`);
     return res.data;
 };
+export const getChecked = async (id, data) => {
+    const res = await axios.put(`https://jsonplaceholder.typicode.com/todos/${id}`, data);
+    return res.data;
+};
 
 export const getPost = async (id) => {
     const res = await axios.get(`https://jsonplaceholder.typicode.com/${id}`);

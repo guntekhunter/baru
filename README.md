@@ -1,3 +1,17 @@
+# how to login into the app
+
+this checklist app have 10 users that have there own pin to login:
+1. pin: 1234
+2. pin: 2345
+3. pin: 3456
+4. pin: 4567
+5. pin: 5678
+6. pin: 6789
+7. pin: 7891
+8. pin: 8910
+9. pin: 9101
+10. pin: 1011
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

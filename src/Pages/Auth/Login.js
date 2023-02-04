@@ -26,17 +26,17 @@ export default function Login() {
       .filter((pin) => pin.pin === e.target.value)
       .map((pin) => pin.id);
     setResult(result);
+    console.log(result);
   };
 
   // redirect to checklist pages
   const handleGo = (e) => {
     //condition to check rather the pin is available or not
     console.log(result);
-    if (result) {
+    if (result.length !== 0) {
       setResult(result);
-      alert(`The value ${result} was found in the array.`);
     } else {
-      alert(`The value ${pinValue} was not found in the array.`);
+      alert(`The pin ${pinValue} was not found`);
     }
   };
   return (
@@ -51,19 +51,25 @@ export default function Login() {
               className="bg-inherit focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
               placeholder="Enter 4-digit code"
             />
-            <Link to={{ pathname: "/checklist" }} state={{ data: result }}>
-              <button
-                onClick={handleGo}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full mt-4"
-              >
-                Submit
-              </button>
-            </Link>
-          </div>
-          <div className="mt-2">
-            <Link to="/register">
-              <u className="text-1 mb-4 mt-2">Register</u>
-            </Link>
+            {result.length !== 0 ? (
+              <Link to={{ pathname: `/checklist` }} state={{ data: result }}>
+                <button
+                  onClick={handleGo}
+                  className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full mt-4"
+                >
+                  Submit
+                </button>
+              </Link>
+            ) : (
+              <Link to={{ pathname: `/` }} state={{ data: result }}>
+                <button
+                  onClick={handleGo}
+                  className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full mt-4"
+                >
+                  Submit
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

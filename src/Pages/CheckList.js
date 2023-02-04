@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import CheckBox from "../Conponent/CheckBox";
 import { getCheck, getUsers } from "../Post/post";
 
 export default function CheckList() {
   const [data, setData] = useState([]);
   const [dataCheck, setDataCheck] = useState([]);
-  const [dataCheckFiltered, setDataCheckFiltered] = useState([]);
+  const [check, setCheck] = useState();
+  const [checked, setChecked] = useState();
   const location = useLocation();
   const id = parseInt(location.state?.data);
-  console.log(id);
 
   // fetching data from api to get user information
   const fetchData = async () => {
+    // get user
     await getUsers(id)
       .then((res) => {
         setData(res);
@@ -19,6 +21,7 @@ export default function CheckList() {
       .catch((err) => {
         console.log(err);
       });
+    // get todos
     await getCheck(id)
       .then((res) => {
         setDataCheck(res);
@@ -28,18 +31,18 @@ export default function CheckList() {
       });
   };
 
-  // filtering todose base on user id
-    const filteredCheck = dataCheck.filter((item) => item.userId === id);
+  const checkCallBack = (checked) => {
+    setChecked(checked);
+  };
 
   // console.log(dataCheck);
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(dataCheck);
-  console.log(dataCheckFiltered);
+
   return (
     <div>
-      <div className="bg-gray-100 p-6">
+      <div className="bg-gray-100 p-6 px-[10rem]">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <div>
@@ -55,18 +58,24 @@ export default function CheckList() {
         </div>
       </div>
 
-      <div className="p-6">
+      <div className="p-6 px-[10rem]">
         <h1 className="text-2xl font-bold mb-4">Checklist</h1>
         <div className="bg-white p-4 rounded-lg shadow">
           <ul className="list-disc pl-4">
             {dataCheck.map((item) => (
               <li key={item.id} className="list-none">
-                <input
-                  type="checkbox"
-                  className="mr-2"
-                  id="item1"
-                  checked={item.completed}
-                />
+                {item.completed === true ? (
+                  <CheckBox
+                    checked={item.completed}
+                    id={item.id}
+                    checkCallBack={checkCallBack}
+                  />
+                ) : (
+                  <CheckBox
+                    checked={checked}
+                    checkCallBack={checkCallBack}
+                  />
+                )}
                 {item.title}
               </li>
             ))}
